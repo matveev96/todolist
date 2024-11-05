@@ -18,7 +18,7 @@ type TaskProps = {
 export const Todolist = ({truck, tasks}: TodolistProps) => {
 
 
-    const mappedTasks = tasks.map((el, index) => {
+    const mappedTasks = tasks.map((el) => {
         // debugger
 
         return (
