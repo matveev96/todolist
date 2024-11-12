@@ -1,36 +1,75 @@
-import React from 'react';
 import './App.css';
-import {Todolist} from "./components/Todolist";
+import {Todolist} from "./Todolist";
+import {useState} from "react";
+
+export type TaskType = {
+    id: number
+    title: string
+    isDone: boolean
+}
+
+export type FilterValueType = 'All' | 'Completed' | 'Active'
 
 function App() {
-const truck1='What to learn-1'
-const truck2='What to learn-2'
+    // let tasks: Array<TaskType> = [
+    //     {id: 1, title: 'HTML&CSS', isDone: true},
+    //     {id: 2, title: 'JS', isDone: true},
+    //     {id: 3, title: 'ReactJS', isDone: false},
+    //     {id: 4, title: 'Redux', isDone: false},
+    //     {id: 5, title: 'Typescript', isDone: false},
+    //     {id: 6, title: 'RTK query', isDone: false},
+    // ]
 
-    const tasks1 = [
-        { id: 1, title: 'HTML&CSS', isDone: true },  //0
-        { id: 2, title: 'JS', isDone: true },       //1
-        { id: 3, title: 'ReactJS', isDone: false },  //2
-        { id: 4, title: 'ReactJS-2', isDone: false },  //3
-    ]
+    let [tasks, setTasks] = useState([
+        {id: 1, title: 'HTML&CSS', isDone: true},
+        {id: 2, title: 'JS', isDone: true},
+        {id: 3, title: 'ReactJS', isDone: false},
+        {id: 4, title: 'Redux', isDone: false},
+        {id: 5, title: 'Typescript', isDone: false},
+        {id: 6, title: 'RTK query', isDone: false},
+    ])
 
-    const tasks2 = [
-        { id: 1, title: 'Hello world', isDone: true },
-        { id: 2, title: 'I am Happy', isDone: false },
-        { id: 3, title: 'Yo', isDone: false },
-    ]
- const arr=[
-     1, //el
-     2, //el
-     3 //el
- ]
+
+    const removeTasks = (taskId: number) => {
+        setTasks(tasks.filter(el => el.id !== taskId))
+    }
+
+
+    const [valForDurshlag, setValForDurshlag] = useState('All')
+
+    const changeFilter = (val: FilterValueType) => {
+        setValForDurshlag(val)
+    }
+
+
+
+    const durshlagFoo=()=> {
+        switch (valForDurshlag) {
+            case'Completed': {
+                return tasks.filter(el => el.isDone)
+            }
+            case'Active': {
+                return tasks.filter(el => !el.isDone)
+            }
+            default:
+                return tasks
+        }
+    }
+
+
+    let durshlagVal=durshlagFoo()
 
 
     return (
         <div className="App">
-           <Todolist truck={truck1} tasks={tasks1} />
-           <Todolist truck={truck2} tasks={tasks2} />
-        </div>
+            <Todolist
+                title="What to learn"
+                tasks={tasks}
+                removeTasks={removeTasks}
+                // changeFilter={changeFilter}
 
+            />
+        </div>
     );
 }
 
